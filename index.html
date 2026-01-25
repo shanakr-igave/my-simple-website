@@ -4,13 +4,74 @@
   <title>My First Website</title>
    <!-- Zipy Script -->
   <script src="https://cdn.zipy.ai/sdk/v1.0/zipy.min.umd.js" crossorigin="anonymous"></script> <script> window.zipy && window.zipy.init('5ae54d56');</script>
-</head>
-<body>
-  <h1>Welcome to My Website</h1>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-  <button onclick="alert('Button 1 clicked')">Button 1</button>
-  <button onclick="alert('Button 2 clicked')">Button 2</button>
-  <button onclick="alert('Button 3 clicked')">Button 3</button>
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      background-color: #4f46e5;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #4338ca;
+    }
+  </style>
+</head>
+  
+<body>
+   <div class="container">
+    <h1>Welcome 👋</h1>
+
+    <button onclick="trackEvent('view_dashboard')">
+      View Dashboard
+    </button>
+
+    <button onclick="trackEvent('submit_feedback')">
+      Submit Feedback
+    </button>
+
+    <button onclick="trackEvent('contact_support')">
+      Contact Support
+    </button>
+  </div>
+
+  <script>
+    function trackEvent(eventName) {
+      alert(eventName + " clicked");
+
+      if (window.zipy) {
+        zipy.track(eventName);
+      }
+    }
+  </script>
 
 </body>
 </html>
