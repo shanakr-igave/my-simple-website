@@ -72,6 +72,30 @@
       }
     }
   </script>
+  
+  <button onclick="trigger400()">Trigger 400 Error</button>
+<button onclick="trigger500()">Trigger 500 Error</button>
+
+<script>
+  function trigger400() {
+    fetch("https://httpstat.us/400")
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("400 Bad Request");
+        }
+      });
+  }
+
+  function trigger500() {
+    fetch("https://httpstat.us/500")
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("500 Internal Server Error");
+        }
+      });
+  }
+</script>
+
 
 </body>
 </html>
