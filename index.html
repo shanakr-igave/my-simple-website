@@ -2,9 +2,14 @@
 <html>
 <head>
   <title>My First Website</title>
-   <!-- Zipy Script -->
-  <script src="https://cdn.zipy.ai/sdk/v1.0/zipy.min.umd.js" crossorigin="anonymous"></script> <script> window.zipy && window.zipy.init('5ae54d56');</script>
-<style>
+
+  <!-- Zipy Script -->
+  <script src="https://cdn.zipy.ai/sdk/v1.0/zipy.min.umd.js" crossorigin="anonymous"></script>
+  <script>
+    window.zipy && window.zipy.init('5ae54d56');
+  </script>
+
+  <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f5f7fb;
@@ -21,7 +26,7 @@
       border-radius: 10px;
       text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      width: 300px;
+      width: 320px;
     }
 
     h1 {
@@ -43,11 +48,19 @@
     button:hover {
       background-color: #4338ca;
     }
+
+    .error-btn {
+      background-color: #dc2626;
+    }
+
+    .error-btn:hover {
+      background-color: #b91c1c;
+    }
   </style>
 </head>
-  
+
 <body>
-   <div class="container">
+  <div class="container">
     <h1>Welcome 👋</h1>
 
     <button onclick="trackEvent('view_dashboard')">
@@ -61,6 +74,15 @@
     <button onclick="trackEvent('contact_support')">
       Contact Support
     </button>
+
+    <!-- Error Trigger Buttons -->
+    <button class="error-btn" onclick="trigger400Error()">
+      Trigger 400 Error
+    </button>
+
+    <button class="error-btn" onclick="trigger500Error()">
+      Trigger 500 Error
+    </button>
   </div>
 
   <script>
@@ -71,31 +93,24 @@
         zipy.track(eventName);
       }
     }
+
+    function trigger400Error() {
+      fetch("https://httpstat.us/400")
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("ZIPY_TEST_400: Bad Request error triggered");
+          }
+        });
+    }
+
+    function trigger500Error() {
+      fetch("https://httpstat.us/500")
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("ZIPY_TEST_500: Internal Server Error triggered");
+          }
+        });
+    }
   </script>
-  
-  <button onclick="trigger400()">Trigger 400 Error</button>
-<button onclick="trigger500()">Trigger 500 Error</button>
-
-<script>
-  function trigger400() {
-    fetch("https://httpstat.us/400")
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("400 Bad Request");
-        }
-      });
-  }
-
-  function trigger500() {
-    fetch("https://httpstat.us/500")
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("500 Internal Server Error");
-        }
-      });
-  }
-</script>
-
-
 </body>
 </html>
