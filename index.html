@@ -105,43 +105,37 @@
     Error occurred
   </div>
 
-  <script>
-    function trackEvent(eventName) {
-      alert(eventName + " clicked");
+ <script>
+  function showErrorToast(message) {
+    const toast = document.getElementById("error-toast");
+    toast.innerText = message;
+    toast.style.display = "block";
 
-      if (window.zipy) {
-        zipy.track(eventName);
-      }
-    }
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 3000);
+  }
 
-    function showErrorToast(message) {
-      const toast = document.getElementById("error-toast");
-      toast.innerText = message;
-      toast.style.display = "block";
+  function trigger400Error() {
+    showErrorToast("400 Error: Something went wrong!");
 
-      setTimeout(() => {
-        toast.style.display = "none";
-      }, 3000);
-    }
+    setTimeout(function () {
+      // This creates a real unhandled error
+      notDefinedFunctionCall();
+    }, 100);
+  }
 
-    // Simulated errors (Best for demo + GitHub Pages)
+  function trigger500Error() {
+    showErrorToast("500 Error: Internal Server Error!");
 
-    function trigger400Error() {
-      showErrorToast("400 Error: Something went wrong. Please try again!");
+    setTimeout(function () {
+      // Another real JS crash
+      let obj = null;
+      obj.property; // Cannot read property of null
+    }, 100);
+  }
+</script>
 
-      setTimeout(() => {
-        throw new Error("ZIPY_TEST_400: Simulated Bad Request error");
-      }, 100);
-    }
-
-    function trigger500Error() {
-      showErrorToast("500 Error: Internal Server Error. Please try later!");
-
-      setTimeout(() => {
-        throw new Error("ZIPY_TEST_500: Simulated Internal Server error");
-      }, 100);
-    }
-  </script>
 
 </body>
 </html>
