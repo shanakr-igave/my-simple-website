@@ -117,25 +117,31 @@
   }
 
   function trigger400Error() {
-    showErrorToast("400 Error: Something went wrong!");
-
-    setTimeout(function () {
-      // This creates a real unhandled error
-      notDefinedFunctionCall();
-    }, 100);
+    fetch("https://httpstat.us/400")
+      .then(response => {
+        if (!response.ok) {
+          showErrorToast("400 Bad Request occurred!");
+          throw new Error("API_400_ERROR");
+        }
+      })
+      .catch(error => {
+        console.error("400 API Error:", error);
+      });
   }
 
   function trigger500Error() {
-    showErrorToast("500 Error: Internal Server Error!");
-
-    setTimeout(function () {
-      // Another real JS crash
-      let obj = null;
-      obj.property; // Cannot read property of null
-    }, 100);
+    fetch("https://httpstat.us/500")
+      .then(response => {
+        if (!response.ok) {
+          showErrorToast("500 Internal Server Error occurred!");
+          throw new Error("API_500_ERROR");
+        }
+      })
+      .catch(error => {
+        console.error("500 API Error:", error);
+      });
   }
 </script>
-
 
 </body>
 </html>
