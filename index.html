@@ -58,20 +58,19 @@
     }
 
     .toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #dc2626;
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-size: 14px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  display: none;
-  z-index: 1000;
-}
-
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #dc2626;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 1000;
+    }
   </style>
 </head>
 
@@ -101,49 +100,48 @@
     </button>
   </div>
 
- <script>
-  function showErrorToast(message) {
-    const toast = document.getElementById("error-toast");
-    toast.innerText = message;
-    toast.style.display = "block";
-
-    setTimeout(() => {
-      toast.style.display = "none";
-    }, 3000);
-  }
-
-  function trigger400Error() {
-    fetch("https://httpstat.us/400")
-      .then(res => {
-        if (!res.ok) {
-          showErrorToast("400 Error: Something went wrong!");
-          throw new Error("ZIPY_TEST_400: Bad Request error triggered");
-        }
-      })
-      .catch(err => {
-        showErrorToast("Network Error occurred!");
-        throw err; // keeps Zipy capturing it
-      });
-  }
-
-  function trigger500Error() {
-    fetch("https://httpstat.us/500")
-      .then(res => {
-        if (!res.ok) {
-          showErrorToast("500 Error: Internal Server Error!");
-          throw new Error("ZIPY_TEST_500: Internal Server Error triggered");
-        }
-      })
-      .catch(err => {
-        showErrorToast("Network Error occurred!");
-        throw err; // keeps Zipy capturing it
-      });
-  }
-</script>
-
+  <!-- Toast UI -->
   <div id="error-toast" class="toast">
-  Sorry, something went wrong. Please try again after sometime!
-</div>
+    Error occurred
+  </div>
+
+  <script>
+    function trackEvent(eventName) {
+      alert(eventName + " clicked");
+
+      if (window.zipy) {
+        zipy.track(eventName);
+      }
+    }
+
+    function showErrorToast(message) {
+      const toast = document.getElementById("error-toast");
+      toast.innerText = message;
+      toast.style.display = "block";
+
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 3000);
+    }
+
+    // Simulated errors (Best for demo + GitHub Pages)
+
+    function trigger400Error() {
+      showErrorToast("400 Error: Something went wrong. Please try again!");
+
+      setTimeout(() => {
+        throw new Error("ZIPY_TEST_400: Simulated Bad Request error");
+      }, 100);
+    }
+
+    function trigger500Error() {
+      showErrorToast("500 Error: Internal Server Error. Please try later!");
+
+      setTimeout(() => {
+        throw new Error("ZIPY_TEST_500: Simulated Internal Server error");
+      }, 100);
+    }
+  </script>
 
 </body>
 </html>
