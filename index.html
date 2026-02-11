@@ -101,7 +101,7 @@
     </button>
   </div>
 
-  <script>
+ <script>
   function showErrorToast(message) {
     const toast = document.getElementById("error-toast");
     toast.innerText = message;
@@ -116,9 +116,13 @@
     fetch("https://httpstat.us/400")
       .then(res => {
         if (!res.ok) {
-          showErrorToast("Sorry, something went wrong. Please try again after sometime!");
+          showErrorToast("400 Error: Something went wrong!");
           throw new Error("ZIPY_TEST_400: Bad Request error triggered");
         }
+      })
+      .catch(err => {
+        showErrorToast("Network Error occurred!");
+        throw err; // keeps Zipy capturing it
       });
   }
 
@@ -126,9 +130,13 @@
     fetch("https://httpstat.us/500")
       .then(res => {
         if (!res.ok) {
-          showErrorToast("Sorry, something went wrong. Please try again after sometime!");
+          showErrorToast("500 Error: Internal Server Error!");
           throw new Error("ZIPY_TEST_500: Internal Server Error triggered");
         }
+      })
+      .catch(err => {
+        showErrorToast("Network Error occurred!");
+        throw err; // keeps Zipy capturing it
       });
   }
 </script>
